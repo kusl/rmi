@@ -21,7 +21,8 @@ public class MyMessageClient {
         try (Scanner scanner = new Scanner(System.in)) {
             MyMessageServerInterface server = (MyMessageServerInterface) Naming.lookup(myHost + "MyMessageServer");
             MyMessageInterface myMessage = server.echoMessage();
-            myMessage.getMessage("tsk tsk");
+            String newMessage = scanner.nextLine();
+            myMessage.getMessage(newMessage);
             System.out.println(myMessage.echoMessage());
         } catch (MalformedURLException | RemoteException | NotBoundException | ServerNotActiveException exception) {
             exception.printStackTrace();
