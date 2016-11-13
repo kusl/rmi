@@ -11,7 +11,7 @@ import java.rmi.server.UnicastRemoteObject;
  * Hello, world!
  */
 class MyMessage extends UnicastRemoteObject implements MyMessageInterface {
-    final private String messageText;
+    private String messageText;
 
     MyMessage() throws RemoteException, ServerNotActiveException {
         super(MyMessageServer.MyObjectPort);
@@ -21,5 +21,10 @@ class MyMessage extends UnicastRemoteObject implements MyMessageInterface {
     @Override
     public String echoMessage() throws RemoteException {
         return messageText;
+    }
+
+    @Override
+    public void getMessage(String messageText) throws RemoteException {
+        this.messageText = messageText;
     }
 }

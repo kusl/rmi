@@ -17,18 +17,15 @@ import java.rmi.server.UnicastRemoteObject;
  */
 public class MyMessageServer extends UnicastRemoteObject implements MyMessageServerInterface {
     static final int MyObjectPort = 1100;
-
     private MyMessageServer() throws RemoteException {
         super(MyObjectPort);
     }
-
     public static void main(String[] args) throws RemoteException, MalformedURLException {
         LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
         System.getProperties().put("java.rmi/server.hostname", "127.0.0.1");
         MyMessageServerInterface myMessageServer = new MyMessageServer();
         Naming.rebind("MyMessageServer", myMessageServer);
     }
-
     @Override
     public MyMessageInterface echoMessage() throws RemoteException, ServerNotActiveException {
         return new MyMessage();
