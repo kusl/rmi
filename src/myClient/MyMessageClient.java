@@ -22,7 +22,7 @@ public class MyMessageClient {
             MyMessageServerInterface server = (MyMessageServerInterface) Naming.lookup(myHost + "MyMessageServer");
             MyMessageInterface myMessage = server.echoMessage();
             String newMessage = scanner.nextLine();
-            myMessage.getMessage(newMessage);
+            myMessage.setMessage(newMessage);
             System.out.println(myMessage.echoMessage());
         } catch (MalformedURLException | RemoteException | NotBoundException | ServerNotActiveException exception) {
             exception.printStackTrace();

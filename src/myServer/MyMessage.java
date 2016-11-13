@@ -24,7 +24,7 @@ class MyMessage extends UnicastRemoteObject implements MyMessageInterface {
     }
 
     @Override
-    public void getMessage(String messageText) throws RemoteException {
+    public void setMessage(String messageText) throws RemoteException {
         this.messageText = messageText;
     }
 }
