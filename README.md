@@ -1,3 +1,10 @@
+Update:
+
+The client will now actually echo what you input.
+I use java util scanner for this.
+
+
+--
 Hello, world!
 
 This is my first attempt at creating a Java RMI application.
