@@ -47,5 +47,8 @@ public class MyMessageServer extends UnicastRemoteObject implements MyMessageSer
         counter++;
         System.out.println(messageText);
         System.out.println("The current count is " + Integer.toString(counter));
+        //The current count is 2439527
+        //Exception in thread "RMI TCP Connection(idle)" java.lang.OutOfMemoryError: GC overhead limit exceeded
+
     }
 }
