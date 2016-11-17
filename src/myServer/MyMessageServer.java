@@ -46,5 +46,6 @@ public class MyMessageServer extends UnicastRemoteObject implements MyMessageSer
         myMessages.add(message);
         counter++;
         System.out.println(messageText);
+        System.out.println("The current count is " + Integer.toString(counter));
     }
 }
