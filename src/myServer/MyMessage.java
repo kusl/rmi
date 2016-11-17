@@ -12,19 +12,21 @@ import java.rmi.server.UnicastRemoteObject;
  */
 class MyMessage extends UnicastRemoteObject implements MyMessageInterface {
     private String messageText;
+    private int id;
 
     MyMessage() throws RemoteException, ServerNotActiveException {
         super(MyMessageServer.MyObjectPort);
-        messageText = "Hello, world!";
+        this.messageText = "Hello, world!";
+    }
+
+    MyMessage(int id, String messageText) throws RemoteException, ServerNotActiveException {
+        super(MyMessageServer.MyObjectPort);
+        this.id = id;
+        this.messageText = messageText;
     }
 
     @Override
     public String echoMessage() throws RemoteException {
-        return messageText;
-    }
-
-    @Override
-    public void setMessage(String messageText) throws RemoteException {
-        this.messageText = messageText;
+        return this.messageText;
     }
 }

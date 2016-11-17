@@ -10,6 +10,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.ServerNotActiveException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Vector;
 
 /**
  * Created by khada on 11/12/16.
@@ -17,8 +18,11 @@ import java.rmi.server.UnicastRemoteObject;
  */
 public class MyMessageServer extends UnicastRemoteObject implements MyMessageServerInterface {
     static final int MyObjectPort = 1100;
+    private static int counter = 0;
+    private Vector<MyMessageInterface> myMessages;
     private MyMessageServer() throws RemoteException {
         super(MyObjectPort);
+        myMessages = new Vector<>();
     }
     public static void main(String[] args) throws RemoteException, MalformedURLException {
         LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
@@ -29,5 +33,18 @@ public class MyMessageServer extends UnicastRemoteObject implements MyMessageSer
     @Override
     public MyMessageInterface echoMessage() throws RemoteException, ServerNotActiveException {
         return new MyMessage();
+    }
+
+    @Override
+    public MyMessageInterface echoMessage(int id) throws RemoteException, ServerNotActiveException {
+        return myMessages.elementAt(id);
+    }
+
+    @Override
+    public void addMessage(String messageText) throws RemoteException, ServerNotActiveException {
+        MyMessage message = new MyMessage(counter, messageText);
+        myMessages.add(message);
+        counter++;
+        System.out.println(messageText);
     }
 }

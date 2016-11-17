@@ -1,6 +1,5 @@
 package myClient;
 
-import myInterface.MyMessageInterface;
 import myInterface.MyMessageServerInterface;
 
 import java.net.MalformedURLException;
@@ -20,10 +19,16 @@ public class MyMessageClient {
         final String myHost = String.format("rmi://%s:%d/", "127.0.0.1", Registry.REGISTRY_PORT);
         try (Scanner scanner = new Scanner(System.in)) {
             MyMessageServerInterface server = (MyMessageServerInterface) Naming.lookup(myHost + "MyMessageServer");
-            MyMessageInterface myMessage = server.echoMessage();
-            String newMessage = scanner.nextLine();
-            myMessage.setMessage(newMessage);
-            System.out.println(myMessage.echoMessage());
+            for (int i = 0; i < 1000000000; i++) {
+                //String newMessage = scanner.nextLine();
+                String newMessage = Integer.toString(i);
+                server.addMessage(newMessage);
+                System.out.println(server.echoMessage(0).echoMessage());
+                //String oneMessage = scanner.nextLine();
+                String oneMessage = 2 + Integer.toString(i);
+                server.addMessage(oneMessage);
+                System.out.println(server.echoMessage(1).echoMessage());
+            }
         } catch (MalformedURLException | RemoteException | NotBoundException | ServerNotActiveException exception) {
             exception.printStackTrace();
         }
