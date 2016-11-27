@@ -16,7 +16,7 @@ import java.util.Scanner;
  */
 public class MyMessageClient {
     public static void main(String[] args) throws RemoteException {
-        final String myHost = String.format("rmi://%s:%d/", "67.205.162.207", Registry.REGISTRY_PORT);
+        final String myHost = String.format("rmi://%s:%d/", "127.0.0.1", Registry.REGISTRY_PORT);
         try (Scanner scanner = new Scanner(System.in)) {
             MyMessageServerInterface server = (MyMessageServerInterface) Naming.lookup(myHost + "MyMessageServer");
             for (int i = 0; i < 1000000000; i++) {

@@ -10,7 +10,6 @@ import java.rmi.server.ServerNotActiveException;
  * Hello, world!
  */
 public interface MyMessageServerInterface extends Remote {
-    MyMessageInterface echoMessage() throws RemoteException, MalformedURLException, ServerNotActiveException;
 
     MyMessageInterface echoMessage(int id) throws RemoteException, MalformedURLException, ServerNotActiveException;
 

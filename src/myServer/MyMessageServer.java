@@ -30,10 +30,6 @@ public class MyMessageServer extends UnicastRemoteObject implements MyMessageSer
         MyMessageServerInterface myMessageServer = new MyMessageServer();
         Naming.rebind("MyMessageServer", myMessageServer);
     }
-    @Override
-    public MyMessageInterface echoMessage() throws RemoteException, ServerNotActiveException {
-        return new MyMessage();
-    }
 
     @Override
     public MyMessageInterface echoMessage(int id) throws RemoteException, ServerNotActiveException {
