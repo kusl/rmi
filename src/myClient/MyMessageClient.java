@@ -19,20 +19,18 @@ public class MyMessageClient {
         final String myHost;
         if (args.length == 0) {
             myHost = String.format("rmi://%s:%d/", "127.0.0.1", Registry.REGISTRY_PORT);
-        } else {
+        } else if (args.length == 1) {
             myHost = String.format("rmi://%s:%d/", args[0], Registry.REGISTRY_PORT);
+        } else {
+            myHost = String.format("rmi://%s:%d/", args[0], Integer.parseInt(args[1]));
         }
         try (Scanner scanner = new Scanner(System.in)) {
             MyMessageServerInterface server = (MyMessageServerInterface) Naming.lookup(myHost + "MyMessageServer");
-            for (int i = 0; i < 1000000000; i++) {
+            for (int i = 0; i < 100; i++) {
                 //String newMessage = scanner.nextLine();
                 String newMessage = Integer.toString(i);
                 server.addMessage(newMessage);
-                System.out.println(server.echoMessage(0).getMessage());
-                //String oneMessage = scanner.nextLine();
-                String oneMessage = 2 + Integer.toString(i);
-                server.addMessage(oneMessage);
-                System.out.println(server.echoMessage(1).getMessage());
+                System.out.println(server.echoMessage(i).getMessage());
             }
         } catch (MalformedURLException | RemoteException | NotBoundException | ServerNotActiveException exception) {
             exception.printStackTrace();

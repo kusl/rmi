@@ -25,7 +25,11 @@ public class MyMessageServer extends UnicastRemoteObject implements MyMessageSer
         myMessages = new Vector<>();
     }
     public static void main(String[] args) throws RemoteException, MalformedURLException {
-        LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
+        if (args.length > 1) {
+            LocateRegistry.createRegistry(Integer.parseInt(args[1]));
+        } else {
+            LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
+        }
         if (args.length == 0) {
             System.getProperties().put("java.rmi/server.hostname", "127.0.0.1");
         } else {
