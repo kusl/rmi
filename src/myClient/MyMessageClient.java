@@ -57,6 +57,9 @@ public class MyMessageClient {
                     case "3":
 
                         break label;
+                    case "exit":
+
+                        break label;
                     default:
                         break;
                 }
