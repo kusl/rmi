@@ -32,8 +32,35 @@ public class MyMessageClient {
                 server.addMessage(newMessage);
                 System.out.println(server.echoMessage(i).getMessage());
             }
+            printMenu();
         } catch (MalformedURLException | RemoteException | NotBoundException | ServerNotActiveException exception) {
             exception.printStackTrace();
+        }
+    }
+
+    private static void printMenu() {
+        try (Scanner scanner = new Scanner(System.in)) {
+            label:
+            while (true) {
+                System.out.println("Please choose a menu option: ");
+                System.out.println("    Enter 1 to add a new message. ");
+                System.out.println("    Enter 2 to retrieve an existing message.");
+                System.out.println("    Enter 3 to exit.");
+                String input = scanner.nextLine();
+                switch (input) {
+                    case "1":
+
+                        break;
+                    case "2":
+
+                        break;
+                    case "3":
+
+                        break;
+                    default:
+                        break label;
+                }
+            }
         }
     }
 }
