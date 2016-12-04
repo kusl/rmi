@@ -56,9 +56,9 @@ public class MyMessageClient {
                         break;
                     case "3":
 
-                        break;
-                    default:
                         break label;
+                    default:
+                        break;
                 }
             }
         }
