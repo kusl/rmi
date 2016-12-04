@@ -17,7 +17,7 @@ import java.util.Scanner;
  * Hello, world!
  */
 public class MyMessageClient {
-    public static void main(String[] args) throws RemoteException {
+    public static void main(String[] args) throws RemoteException, MalformedURLException, NotBoundException, ServerNotActiveException {
         final String myHost;
         if (args.length == 0) {
             myHost = String.format("rmi://%s:%d/", "127.0.0.1", Registry.REGISTRY_PORT);
@@ -26,21 +26,17 @@ public class MyMessageClient {
         } else {
             myHost = String.format("rmi://%s:%d/", args[0], Integer.parseInt(args[1]));
         }
-        try {
-            MyMessageServerInterface server = (MyMessageServerInterface) Naming.lookup(myHost + "MyMessageServer");
-            for (int i = 0; i < 100; i++) {
-                //String newMessage = scanner.nextLine();
-                String newMessage = Integer.toString(i);
-                server.addMessage(newMessage);
-                System.out.println(server.echoMessage(i).getMessage());
-            }
-            printMenu(server);
-        } catch (MalformedURLException | RemoteException | NotBoundException | ServerNotActiveException exception) {
-            exception.printStackTrace();
-        }
+        MyMessageServerInterface server = (MyMessageServerInterface) Naming.lookup(myHost + "MyMessageServer");
+//            for (int i = 0; i < 100; i++) {
+//                //String newMessage = scanner.nextLine();
+//                String newMessage = Integer.toString(i);
+//                server.addMessage(newMessage);
+//                System.out.println(server.echoMessage(i).getMessage());
+//            }
+        printMenu(server);
     }
 
-    private static void printMenu(MyMessageServerInterface server) {
+    private static void printMenu(MyMessageServerInterface server) throws RemoteException, ServerNotActiveException, MalformedURLException {
         try (Scanner scanner = new Scanner(System.in)) {
             label:
             while (true) {
@@ -67,27 +63,20 @@ public class MyMessageClient {
                         break;
                 }
             }
-        } catch (RemoteException e) {
-            e.printStackTrace();
         }
     }
 
-    private static MyMessageInterface retrieveAMessage(MyMessageServerInterface server) {
+    private static MyMessageInterface retrieveAMessage(MyMessageServerInterface server) throws RemoteException, ServerNotActiveException, MalformedURLException {
         try (Scanner scanner = new Scanner(System.in)) {
             Integer id = scanner.nextInt();
             return server.echoMessage(id);
-        } catch (RemoteException | ServerNotActiveException | MalformedURLException e) {
-            e.printStackTrace();
         }
-        return null;
     }
 
-    private static void addNewMessage(MyMessageServerInterface server) {
+    private static void addNewMessage(MyMessageServerInterface server) throws RemoteException, ServerNotActiveException, MalformedURLException {
         try (Scanner scanner = new Scanner(System.in)) {
             String input = scanner.nextLine();
             server.addMessage(input);
-        } catch (RemoteException | ServerNotActiveException | MalformedURLException e) {
-            e.printStackTrace();
         }
     }
 }
