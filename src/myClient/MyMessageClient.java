@@ -1,5 +1,6 @@
 package myClient;
 
+import myInterface.MyMessageInterface;
 import myInterface.MyMessageServerInterface;
 
 import java.net.MalformedURLException;
@@ -8,6 +9,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.rmi.server.ServerNotActiveException;
+import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -24,7 +26,7 @@ public class MyMessageClient {
         } else {
             myHost = String.format("rmi://%s:%d/", args[0], Integer.parseInt(args[1]));
         }
-        try (Scanner scanner = new Scanner(System.in)) {
+        try {
             MyMessageServerInterface server = (MyMessageServerInterface) Naming.lookup(myHost + "MyMessageServer");
             for (int i = 0; i < 100; i++) {
                 //String newMessage = scanner.nextLine();
@@ -32,13 +34,13 @@ public class MyMessageClient {
                 server.addMessage(newMessage);
                 System.out.println(server.echoMessage(i).getMessage());
             }
-            printMenu();
+            printMenu(server);
         } catch (MalformedURLException | RemoteException | NotBoundException | ServerNotActiveException exception) {
             exception.printStackTrace();
         }
     }
 
-    private static void printMenu() {
+    private static void printMenu(MyMessageServerInterface server) {
         try (Scanner scanner = new Scanner(System.in)) {
             label:
             while (true) {
@@ -49,10 +51,11 @@ public class MyMessageClient {
                 String input = scanner.nextLine();
                 switch (input) {
                     case "1":
-
+                        addNewMessage(server);
                         break;
                     case "2":
-
+                        MyMessageInterface message = retrieveAMessage(server);
+                        System.out.println(Objects.requireNonNull(message) != null ? message.getMessage() : null);
                         break;
                     case "3":
 
@@ -64,6 +67,27 @@ public class MyMessageClient {
                         break;
                 }
             }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static MyMessageInterface retrieveAMessage(MyMessageServerInterface server) {
+        try (Scanner scanner = new Scanner(System.in)) {
+            Integer id = scanner.nextInt();
+            return server.echoMessage(id);
+        } catch (RemoteException | ServerNotActiveException | MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static void addNewMessage(MyMessageServerInterface server) {
+        try (Scanner scanner = new Scanner(System.in)) {
+            String input = scanner.nextLine();
+            server.addMessage(input);
+        } catch (RemoteException | ServerNotActiveException | MalformedURLException e) {
+            e.printStackTrace();
         }
     }
 }
