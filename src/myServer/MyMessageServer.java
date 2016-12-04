@@ -35,6 +35,9 @@ public class MyMessageServer extends UnicastRemoteObject implements MyMessageSer
         } else {
             System.getProperties().put("java.rmi/server.hostname", args[0]);
         }
+        System.getProperties().put("java.rmi/server.codebase", "myInterface.jar");
+        System.getProperties().put("java.rmi/security.policy", "server.policy");
+        System.out.println("hostname: " + System.getProperties().getProperty("java.rmi/server.hostname"));
         MyMessageServerInterface myMessageServer = new MyMessageServer();
         Naming.rebind("MyMessageServer", myMessageServer);
     }
