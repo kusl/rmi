@@ -22,7 +22,7 @@ public class MyMessageServer extends UnicastRemoteObject implements MyMessageSer
     private Vector<MyMessageInterface> myMessages;
     private MyMessageServer() throws RemoteException {
         super(MyObjectPort);
-        myMessages = new Vector<>();
+        myMessages = new Vector<MyMessageInterface>();
     }
     public static void main(String[] args) throws RemoteException, MalformedURLException {
         if (args.length > 1) {
