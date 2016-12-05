@@ -38,30 +38,20 @@ public class MyMessageClient {
 
     private static void printMenu(MyMessageServerInterface server) throws RemoteException, ServerNotActiveException, MalformedURLException {
         try (Scanner scanner = new Scanner(System.in)) {
-            label:
-            while (true) {
-                System.out.println("Please choose a menu option: ");
-                System.out.println("    Enter 1 to add a new message. ");
-                System.out.println("    Enter 2 to retrieve an existing message.");
-                System.out.println("    Enter 3 to exit.");
-                String input = scanner.nextLine();
-                switch (input) {
-                    case "1":
-                        addNewMessage(server);
-                        break;
-                    case "2":
-                        MyMessageInterface message = retrieveAMessage(server);
-                        System.out.println(Objects.requireNonNull(message) != null ? message.getMessage() : null);
-                        break;
-                    case "3":
-
-                        break label;
-                    case "exit":
-
-                        break label;
-                    default:
-                        break;
-                }
+            System.out.println("Please choose a menu option: ");
+            System.out.println("    Enter 1 to add a new message. ");
+            System.out.println("    Enter 2 to retrieve an existing message.");
+            String input = scanner.nextLine();
+            switch (input) {
+                case "1":
+                    addNewMessage(server);
+                    break;
+                case "2":
+                    MyMessageInterface message = retrieveAMessage(server);
+                    System.out.println(Objects.requireNonNull(message) != null ? message.getMessage() : null);
+                    break;
+                default:
+                    break;
             }
         }
     }
