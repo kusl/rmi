@@ -1,0 +1,9 @@
+build:sixServer:
+ image: openjdk:6-jdk
+ script:
+   - cd src && javac myServer/MyMessageServer.java
+
+build:sixClient:
+ image: openjdk:6-jdk
+ script:
+   - cd src && javac myClient/MyMessageClient.java
