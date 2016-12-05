@@ -36,39 +36,46 @@ public class MyMessageClient {
     }
 
     private static void printMenu(MyMessageServerInterface server) throws RemoteException, ServerNotActiveException, MalformedURLException {
-        try (Scanner scanner = new Scanner(System.in)) {
+        Scanner scanner = new Scanner(System.in);
+        try {
             System.out.println("Please choose a menu option: ");
             System.out.println("    Enter 1 to add a new message. ");
             System.out.println("    Enter 2 to retrieve an existing message.");
             String input = scanner.nextLine();
-            switch (input) {
-                case "1":
-                    addNewMessage(server);
-                    break;
-                case "2":
-                    MyMessageInterface message = retrieveAMessage(server);
-                    if (message != null) {
-                        System.out.println(message.getMessage());
-                    } else
-                        System.out.println("Server returned a null. I imagine a message by that ID is not available. ");
-                    break;
-                default:
-                    break;
+            if (input.equals("1")) {
+                addNewMessage(server);
+
+            } else if (input.equals("2")) {
+                MyMessageInterface message = retrieveAMessage(server);
+                if (message != null) {
+                    System.out.println(message.getMessage());
+                } else
+                    System.out.println("Server returned a null. I imagine a message by that ID is not available. ");
+
+            } else {
             }
+        } finally {
+            scanner.close();
         }
     }
 
     private static MyMessageInterface retrieveAMessage(MyMessageServerInterface server) throws RemoteException, ServerNotActiveException, MalformedURLException {
-        try (Scanner scanner = new Scanner(System.in)) {
+        Scanner scanner = new Scanner(System.in);
+        try {
             Integer id = scanner.nextInt();
             return server.echoMessage(id);
+        } finally {
+            scanner.close();
         }
     }
 
     private static void addNewMessage(MyMessageServerInterface server) throws RemoteException, ServerNotActiveException, MalformedURLException {
-        try (Scanner scanner = new Scanner(System.in)) {
+        Scanner scanner = new Scanner(System.in);
+        try {
             String input = scanner.nextLine();
             server.addMessage(input);
+        } finally {
+            scanner.close();
         }
     }
 }
