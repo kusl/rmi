@@ -9,7 +9,6 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.rmi.server.ServerNotActiveException;
-import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -48,7 +47,10 @@ public class MyMessageClient {
                     break;
                 case "2":
                     MyMessageInterface message = retrieveAMessage(server);
-                    System.out.println(Objects.requireNonNull(message) != null ? message.getMessage() : null);
+                    if (message != null) {
+                        System.out.println(message.getMessage());
+                    } else
+                        System.out.println("Server returned a null. I imagine a message by that ID is not available. ");
                     break;
                 default:
                     break;
