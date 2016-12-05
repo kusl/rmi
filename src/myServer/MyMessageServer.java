@@ -42,7 +42,10 @@ public class MyMessageServer extends UnicastRemoteObject implements MyMessageSer
 
     @Override
     public MyMessageInterface echoMessage(int id) throws RemoteException, ServerNotActiveException {
-        return myMessages.elementAt(id);
+        if (id >= 0 && myMessages.size() > id) {
+            return myMessages.elementAt(id);
+        }
+        return null;
     }
 
     @Override
